@@ -1,0 +1,111 @@
+= MuteButtonCog
+夏木 悠 <@natsuki__yu>
+v1.0.0 2021-09-03
+
+:toc:
+:toc-title: 目次
+:icons: font
+:hardbreaks:
+
+++++
+<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.1.0/css/font-awesome.min.css">
+++++
+
+// ------------------------------------------ //
+
+GPIOで接続されたボタンを押すと指定のユーザーをサーバーミュートします．
+
+== 操作方法
+
+サーバーミュートの対象にしたいメンバーに，ロール `物理ミュートボタン` を付与してください．
+GPIOで接続したボタンを押すと，ロールが付与されたメンバーをサーバーミュートします．
+
+[IMPORTANT]
+====
+サーバーミュートは退室した後も有効です．
+また．コマンドは相手がボイスチャンネルに居る間しか使えません．
+====
+
+== 必要な権限
+
+Manage Roles:: ミュートする対象を管理するために，権限を作成します．
+Mute Members:: ミュートするために使用します．
+
+[cols="<,<,<", frame=none, grid=none]
+|===
+a|.GENERAL PERMISSIONS
+* [ ] Administrator
+* [ ] View Audit Log
+* [ ] View Server Insights
+* [ ] Manage Server
+* [x] Manage Roles
+* [ ] Manage Channels
+* [ ] Kick Members
+* [ ] Ban Members
+* [ ] Create Instant Invite
+* [ ] Change Nickname
+* [ ] Manage Nicknames
+* [ ] Manage Emojis
+* [ ] Manage Webhooks
+
+a|.TEXT PERMISSIONS
+* [ ] View Channels
+* [ ] Send Messages
+* [ ] Send TTS Messages
+* [ ] Manage Messages
+* [ ] Embed Links
+* [ ] Attach Files
+* [ ] Read Message History
+* [ ] Mention Everyone
+* [ ] Use External Emojis
+* [ ] Add Reactions
+* [ ] Use Slash Commands
+
+a|.VOICE PERMISSIONS
+* [ ] Connect
+* [ ] Speak
+* [ ] Video
+* [x] Mute Members
+* [ ] Deafen Members
+* [ ] Move Members
+* [ ] Use Voice Activity
+* [ ] Priority Speaker
+|===
+
+== 導入
+
+NOTE: プロジェクト名などを変更
+
+:domain: github.com
+:account: NatsukiYu
+:project: MuteButtonCog
+
+次のいずれかのコマンドでインストールすることができます．
+
+* `pip install git+https://{domain}/{account}/{project}.git`
+* `pip install git+ssh://{domain}/{account}/{project}.git`
+
+以下のようにCogを読み込んでください．
+
+.example/main.py
+[source,python]
+----
+include::./example/main.py[]
+----
+<1> GPIOのピンなどを指定する
+<2> Cogを読み込む
+<3> Botを実行する
+
+== 詳細な設定
+=== guild_ids
+Slash CommandsはデフォルトでGlobal Commandsとして扱われます．
+Guild Commandsとしたいときは，環境変数 `guild_ids` を設定してください．
+例． `guild_ids=11111111,22222222`
+
+NOTE: importを変更
+
+[IMPORTANT]
+====
+`import mute_button_cog` の時点で環境変数が参照されます．
+`dotenv` などはインポートの前に行ってください．
+====
